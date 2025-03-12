@@ -34,7 +34,7 @@ if os.path.exists(marker_file):
 else:
     last_pos = 0
 
-print("Log-Tracking gestartet. Neue Einträge werden in die Datei überschrieben.")
+print("Log-Tracking gestartet. Neue Einträge werden an die Ausgabedatei angehängt.")
 
 # Endlosschleife, die das Log überwacht, bis der Benutzer 'quit' eingibt
 while running:
@@ -43,16 +43,16 @@ while running:
         new_content = lf.read()
         new_pos = lf.tell()
 
-    # Falls neue Inhalte vorhanden sind, in die Ausgabedatei (Überschreibmodus) schreiben
+    # Falls neue Inhalte vorhanden sind, diese an die Ausgabedatei anhängen
     if new_content:
-        with open(output_file, 'w', encoding='utf-8') as of:
+        with open(output_file, 'a', encoding='utf-8') as of:
             of.write(new_content)
-        print(f"Neue Einträge wurden in '{output_file}' geschrieben.")
+        print(f"Neue Einträge wurden an '{output_file}' angehängt.")
         last_pos = new_pos
         # Marker-Datei aktualisieren
         with open(marker_file, 'w', encoding='utf-8') as mf:
             mf.write(str(last_pos))
 
-    time.sleep(1)  # Überprüfe alle 1 Sekunde
+    time.sleep(.25)  # Überprüfe alle 1 Sekunde
 
 print("Log-Tracking wurde beendet.")
