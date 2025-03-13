@@ -20,10 +20,9 @@ input_thread = threading.Thread(target=wait_for_quit, daemon=True)
 input_thread.start()
 
 # Pfade zur Log-Datei, Marker-Datei und Ausgabedatei
-log_file = "/Users/work/PycharmProjects/Visure/roni.txt"
-marker_file = "/Users/work/PycharmProjects/Visure/marker.txt"
-output_file = "/Users/work/PycharmProjects/Visure/NewEntries.txt"
-
+log_file = r"C:\Windows\Temp\VR_Server_20250227_090547.log"
+marker_file = r"C:\Users\Roni Aba\Documents\marker.txt"
+output_file = r"C:\Users\Roni Aba\Documents\result.txt"
 # Lese den letzten Leseoffset aus der Marker-Datei (falls vorhanden)
 if os.path.exists(marker_file):
     with open(marker_file, 'r', encoding='utf-8') as mf:
