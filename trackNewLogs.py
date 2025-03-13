@@ -2,9 +2,19 @@ import os
 import time
 import threading
 
+# Funktion, um einen eindeutigen Dateinamen zu generieren
+def get_unique_filename(filename):
+    base, ext = os.path.splitext(filename)
+    counter = 1
+    unique_filename = filename
+    # Solange die Datei existiert, hänge einen Zähler an den Basisnamen an
+    while os.path.exists(unique_filename):
+        unique_filename = f"{base}_{counter}{ext}"
+        counter += 1
+    return unique_filename
+
 # Globaler Flag, der angibt, ob das Skript weiterlaufen soll
 running = True
-
 
 def wait_for_quit():
     global running
@@ -14,7 +24,6 @@ def wait_for_quit():
             running = False
             print("Quit-Befehl empfangen. Das Tracking wird beendet.")
 
-
 # Starte einen separaten Thread, der auf Benutzereingaben wartet
 input_thread = threading.Thread(target=wait_for_quit, daemon=True)
 input_thread.start()
@@ -23,6 +32,10 @@ input_thread.start()
 log_file = r"C:\Windows\Temp\VR_Server_20250227_090547.log"
 marker_file = r"C:\Users\Roni Aba\Documents\marker.txt"
 output_file = r"C:\Users\Roni Aba\Documents\result.txt"
+
+# Generiere einen neuen Ausgabedateinamen, falls die Datei bereits existiert
+output_file = get_unique_filename(output_file)
+
 # Lese den letzten Leseoffset aus der Marker-Datei (falls vorhanden)
 if os.path.exists(marker_file):
     with open(marker_file, 'r', encoding='utf-8') as mf:
@@ -33,7 +46,7 @@ if os.path.exists(marker_file):
 else:
     last_pos = 0
 
-print("Log-Tracking gestartet. Neue Einträge werden an die Ausgabedatei angehängt.")
+print(f"Log-Tracking gestartet. Neue Einträge werden an die Ausgabedatei '{output_file}' angehängt.")
 
 # Endlosschleife, die das Log überwacht, bis der Benutzer 'quit' eingibt
 while running:
