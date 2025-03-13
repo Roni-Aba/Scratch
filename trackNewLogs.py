@@ -53,6 +53,6 @@ while running:
         with open(marker_file, 'w', encoding='utf-8') as mf:
             mf.write(str(last_pos))
 
-    time.sleep(.10)  # Überprüfe alle 1 Sekunde
+    time.sleep(1)  # Überprüfe alle 1 Sekunde
 
 print("Log-Tracking wurde beendet.")
